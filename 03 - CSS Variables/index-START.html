@@ -25,6 +25,21 @@
     /*
       misc styles, nothing to do with CSS variables
     */
+     :root {
+       --base: #ffc600;
+       --spacing: 10px;
+       --blur: 10px;
+     }
+
+     img{
+       padding: var(--spacing);
+       background: var(--base);
+       filter:blur(var(--blur));
+     }
+
+     .hl{
+       color: var(--base);
+     }
 
     body {
       text-align: center;
@@ -42,9 +57,34 @@
     input {
       width: 100px;
     }
+
+    input[type=range]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  border: 1px solid #000000;
+  height: 36px;
+  width: 16px;
+  border-radius: 10px;
+  background: #ffffff;
+  cursor: pointer;
+  /* margin-top: -14px; You need to specify a margin in Chrome, but in Firefox and IE it is automatic */
+  box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d; /* Add cool effects to your sliders! */
+    }
   </style>
 
   <script>
+
+  const inputs = document.querySelectorAll('.controls input');
+
+  function handleUpdate() {
+    //console.log(this.value);
+    const suffix = this.dataset.sizing || " ";
+    //console.log(suffix)
+    document.documentElement.style.setProperty(`--${this.name}`, this.value + suffix);
+
+  } 
+
+  inputs.forEach(input => input.addEventListener('change', handleUpdate));
+    inputs.forEach(input => input.addEventListener('mousemove', handleUpdate));
   </script>
 
 </body>
